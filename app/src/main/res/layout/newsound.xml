@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="0"
+            android:background="@android:color/holo_blue_bright"
+            android:gravity="center"
+            android:text="New Sound Effect"
+            android:textSize="36sp"
+            tools:layout_editor_absoluteX="44dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtnamechanger"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="20"
+                android:gravity="center"
+                android:text="Namechanger" />
+
+            <EditText
+                android:id="@+id/newnamechanger"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="75"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/newrecord"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@android:color/holo_orange_dark"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="Record"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/newstoprecord"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_red_dark"
+            android:gravity="center"
+            android:text="Stop Recording"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/newplay"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Play" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/newaddsoundboard"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="50"
+                android:background="@android:color/holo_green_light"
+                android:gravity="center"
+                android:text="Add to soundboard" />
+
+            <TextView
+                android:id="@+id/newcancel"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="50"
+                android:background="@android:color/holo_red_dark"
+                android:gravity="center"
+                android:text="Cancel" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
