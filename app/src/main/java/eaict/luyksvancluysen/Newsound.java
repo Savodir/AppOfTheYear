@@ -113,6 +113,8 @@ public class Newsound extends MainActivity {
             @Override
             public void onClick(View view) {
                 name = newnamechanger.getText().toString();
+                saveData();
+
                 Log.d("Name", name);
                 Toast.makeText(getApplicationContext(), "New sound added!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);

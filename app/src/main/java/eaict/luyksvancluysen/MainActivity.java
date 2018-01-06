@@ -32,7 +32,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    public List<SoundEffects> soundEffects = new ArrayList<>();
+    public List<SoundEffects>         soundEffects = new ArrayList<>();
+
     String name;
     String Output;
 
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadData();
         String name = getIntent().getStringExtra("name");
         String Output = getIntent().getStringExtra("output");
         ActivityCompat.requestPermissions(MainActivity.this,
@@ -55,13 +55,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 Log.d("xD", Integer.toString(soundEffects.size()));
                 saveData();
+
             }
         });
+        soundEffects.add(new SoundEffects("t", "t"));
+        soundEffects.add(new SoundEffects("t", "t"));
+        soundEffects.add(new SoundEffects("t", "t"));
+        soundEffects.add(new SoundEffects("t", "t"));
+
         TextView test2 = findViewById(R.id.textView4);
         ListView listView = findViewById(R.id.listview);
         if (name != null && Output != null) {
             soundEffects.add(new SoundEffects(Output, name));
         }
+        loadData();
+
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
     }
@@ -122,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
     String json = sp.getString("soundlist", null);
     Type type = new TypeToken<ArrayList<SoundEffects>>() {}.getType();
     soundEffects = gson.fromJson(json, type);
+    if(soundEffects == null) {
+        soundEffects = new ArrayList<>();
+    }
     }
 
 }

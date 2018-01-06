@@ -10,6 +10,7 @@ public class SoundEffects {
     private MediaRecorder mediaRecorder = new MediaRecorder();
     private String name;
     private String output;
+    public SoundEffects() {};
     public SoundEffects(String output, String name) {
         this.output = output;
         this.name = name;
