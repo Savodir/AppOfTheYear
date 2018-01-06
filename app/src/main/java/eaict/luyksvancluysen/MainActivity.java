@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 Log.d("xD", Integer.toString(soundEffects.size()));
                 saveData();
-
             }
         });
         soundEffects.add(new SoundEffects("t", "t"));
@@ -68,10 +67,9 @@ public class MainActivity extends AppCompatActivity {
         if (name != null && Output != null) {
             soundEffects.add(new SoundEffects(Output, name));
         }
-        loadData();
-
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+       saveData();
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -116,12 +114,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void saveData() {
+        super.onStop();
         SharedPreferences sp = getSharedPreferences("SOUNDEFFECTS", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         Gson gson = new Gson();
         String json = gson.toJson(soundEffects);
         editor.putString("soundlist", json);
-        editor.apply();
+        editor.commit();
     }
 
     public void loadData() {
