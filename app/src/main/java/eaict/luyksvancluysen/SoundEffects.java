@@ -9,8 +9,10 @@ import android.media.MediaRecorder;
 public class SoundEffects {
     private MediaRecorder mediaRecorder = new MediaRecorder();
     private String name;
-    public SoundEffects(MediaRecorder mediaRecorder) {
-        this.mediaRecorder = mediaRecorder;
+    private String output;
+    public SoundEffects(String output, String name) {
+        this.output = output;
+        this.name = name;
     }
     public String getName() {
         return this.name;
@@ -18,10 +20,10 @@ public class SoundEffects {
     public void setName(String name) {
         this.name = name;
     }
-    public MediaRecorder getMediaRecorder() {
-        return  mediaRecorder;
+    public String getOutput() {
+        return  output;
     }
-    public void setMediaRecorder(MediaRecorder mediaRecorder) {
-        this.mediaRecorder = mediaRecorder;
+    public void setOutput(String output) {
+        this.output = output;
     }
 }

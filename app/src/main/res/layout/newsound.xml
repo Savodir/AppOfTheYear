@@ -33,15 +33,15 @@
                 android:id="@+id/txtnamechanger"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_weight="20"
+                android:layout_weight="30"
                 android:gravity="center"
-                android:text="Namechanger" />
+                android:text="Name: " />
 
             <EditText
                 android:id="@+id/newnamechanger"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_weight="75"
+                android:layout_weight="70"
                 android:ems="10"
                 android:inputType="textPersonName" />
 
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="50"
-                android:background="@android:color/holo_red_dark"
+                android:background="@android:color/holo_red_light"
                 android:gravity="center"
                 android:text="Cancel" />
         </LinearLayout>
