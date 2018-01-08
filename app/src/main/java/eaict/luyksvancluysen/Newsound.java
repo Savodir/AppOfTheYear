@@ -30,13 +30,14 @@ public class Newsound extends MainActivity {
     String outputFile;
     String name;
     String numberofrecordings;
+//    int id = Integer.parseInt(numberofrecordings) + 1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsound);
         numberofrecordings = getIntent().getStringExtra("listsize");
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording"+numberofrecordings + ".3gp";
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording"+ numberofrecordings + ".3gp";
         tempSound = new MediaRecorder();
         tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
         tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);

@@ -22,13 +22,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/editName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Namechanger" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/editNamechanger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -39,20 +40,35 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/editPlay"
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:text="Play" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/editDelete"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Delete" />
 
         <TextView
+            android:id="@+id/editRecord"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:text="Re-record" />
+
+        <TextView
+            android:id="@+id/editStopRecord"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_red_dark"
+            android:gravity="center"
+            android:text="Stop Recording"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:visibility="invisible" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
