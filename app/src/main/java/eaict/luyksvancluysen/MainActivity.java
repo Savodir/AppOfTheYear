@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), Newsound.class);
-                intent.putExtra("name", soundEffects.size());
+                intent.putExtra("listsize", soundEffects.size());
                 startActivity(intent);
                 saveData();
             }
@@ -69,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
         }
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+
         saveData();
+
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
             final int current = i;
             view = getLayoutInflater().inflate(R.layout.soundlist, null);
             TextView Listname = view.findViewById(R.id.txtname);
@@ -109,9 +111,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+            listedit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getBaseContext(), Editscreen.class);
+                    intent.putExtra("listsize", soundEffects.size());
+                    intent.putExtra("output", soundEffects.get(i).getOutput());
+                    intent.putExtra("name", soundEffects.get(i).getName());
+                    startActivity(intent);
+                }
+            });
             return view;
         }
     }
+
 
     public void saveData() {
         super.onStop();

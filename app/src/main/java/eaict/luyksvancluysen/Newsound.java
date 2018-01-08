@@ -30,6 +30,7 @@ public class Newsound extends MainActivity {
     String outputFile;
     String name;
     String numberofrecordings;
+//    int id = Integer.parseInt(numberofrecordings) + 1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
