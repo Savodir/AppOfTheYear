@@ -34,33 +34,31 @@ public class Newsound extends MainActivity {
     MediaRecorder tempSound;
     String outputFile;
     String name;
-    String numberofrecordings;
-//    int id = Integer.parseInt(numberofrecordings) + 1;
+    int samplerate = 16000;
+    int numofsoundeffects;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsound);
-        numberofrecordings = getIntent().getStringExtra("listsize");
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording"+numberofrecordings + 1 + ".3gp";
-        tempSound = new MediaRecorder();
-        tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
-        tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        tempSound.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        tempSound.setOutputFile(outputFile);
-        tempSound.setAudioSamplingRate(16000);
+        loadData();
+        numofsoundeffects = soundEffects.size() + 1;
         final TextView newrecord = findViewById(R.id.newrecord);
         final TextView newstoprecord = findViewById(R.id.newstoprecord);
         final TextView newsoundboard = findViewById(R.id.newaddsoundboard);
         final TextView newplay = findViewById(R.id.newplay);
         final EditText newnamechanger = findViewById(R.id.newnamechanger);
         final TextView newcancel = findViewById(R.id.newcancel);
+        final TextView newpause = findViewById(R.id.newPause);
+        final TextView newResume = findViewById(R.id.newResume);
         newrecord.setText("Record");
         newstoprecord.setVisibility(View.GONE);
+        newpause.setVisibility(View.GONE);
+        newResume.setVisibility(View.GONE);
         newrecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
+                    newSound();
                     tempSound.prepare();
                     tempSound.start();
                 } catch (IllegalStateException ise) {
@@ -70,11 +68,15 @@ public class Newsound extends MainActivity {
                 }
                 newrecord.setText("Recording");
                 newstoprecord.setVisibility(View.VISIBLE);
+                newpause.setVisibility(View.VISIBLE);
+                newResume.setVisibility(View.VISIBLE);
                 newrecord.setEnabled(false);
                 newsoundboard.setEnabled(false);
                 newplay.setEnabled(false);
                 newnamechanger.setEnabled(false);
                 newcancel.setEnabled(false);
+                newpause.setEnabled(true);
+                newResume.setEnabled(false);
                 Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_SHORT).show();
             }
         });
@@ -93,7 +95,10 @@ public class Newsound extends MainActivity {
                 tempSound.release();
                 tempSound = null;
                 newstoprecord.setVisibility(View.GONE);
+                newResume.setVisibility(View.GONE);
+                newpause.setVisibility(View.GONE);
                 newrecord.setEnabled(true);
+                newrecord.setText("Re-record");
                 newsoundboard.setEnabled(true);
                 newplay.setEnabled(true);
                 newnamechanger.setEnabled(true);
@@ -116,19 +121,17 @@ public class Newsound extends MainActivity {
 
         });
         newsoundboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name = newnamechanger.getText().toString();
-                saveData();
-
-                Log.d("Name", name);
-                Toast.makeText(getApplicationContext(), "New sound added!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("output", outputFile);
-                startActivity(intent);
-                }
-            }
+                                             @Override
+                                             public void onClick(View view) {
+                                                 name = newnamechanger.getText().toString();
+                                                 soundEffects.add(new SoundEffects(outputFile, name));
+                                                 Log.d("Name", name);
+                                                 saveData();
+                                                 Toast.makeText(getApplicationContext(), "New sound added!", Toast.LENGTH_SHORT).show();
+                                                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                                 startActivity(intent);
+                                             }
+                                         }
         );
         newcancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,5 +142,42 @@ public class Newsound extends MainActivity {
 
             }
         });
+        newpause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != tempSound) {
+                    try {
+                        tempSound.pause();
+                        newpause.setEnabled(false);
+                        newResume.setEnabled(true);
+                    } catch (RuntimeException ex) {
+                        //Ignore
+                    }
+                }
+            }
+        });
+        newResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != tempSound) {
+                    try {
+                        tempSound.resume();
+                        newpause.setEnabled(true);
+                        newResume.setEnabled(false);
+                    } catch (RuntimeException ex) {
+                        //Ignore
+                    }
+                }
+            }
+        });
+    }
+    private void newSound() {
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording"+ numofsoundeffects+ ".3gp";
+        tempSound = new MediaRecorder();
+        tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
+        tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        tempSound.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        tempSound.setOutputFile(outputFile);
+        tempSound.setAudioSamplingRate(samplerate);
     }
 }

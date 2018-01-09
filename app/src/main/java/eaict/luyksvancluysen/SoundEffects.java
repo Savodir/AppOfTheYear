@@ -9,19 +9,16 @@ import java.io.Serializable;
  * Created by CarlV on 1/6/2018.
  */
 
-public class SoundEffects /*implements Serializable*/ {
-   // private MediaRecorder mediaRecorder;
+public class SoundEffects {
     private String name;
     private String output;
 
     public SoundEffects(){
-        //mediaRecorder = new MediaRecorder();
     }
 
     public SoundEffects(String output, String name) {
         this.output = output;
         this.name = name;
-        //mediaRecorder = new MediaRecorder();
     }
     public String getName() {
         return this.name;

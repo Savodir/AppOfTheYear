@@ -33,19 +33,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-
     List<SoundEffects> soundEffects;
-
-    String name;
-    String Output;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadData();
-        String name = getIntent().getStringExtra("name");
-        String Output = getIntent().getStringExtra("output");
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 1);
@@ -54,27 +47,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), Newsound.class);
-                intent.putExtra("listsize", soundEffects.size());
                 startActivity(intent);
                 saveData();
             }
         });
-        soundEffects = new ArrayList<>();
-        soundEffects.add(new SoundEffects("t", "t"));
-        soundEffects.add(new SoundEffects("t", "t"));
-        soundEffects.add(new SoundEffects("t", "t"));
-        soundEffects.add(new SoundEffects("t", "t"));
-
         TextView test2 = findViewById(R.id.textView4);
         ListView listView = findViewById(R.id.listview);
-        if (name != null && Output != null) {
-            soundEffects.add(new SoundEffects(Output, name));
-        }
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
-
         saveData();
-
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -110,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                         mediaPlayer.prepare();
                         mediaPlayer.start();
                     } catch (Exception e) {
-
                     }
                 }
             });
@@ -118,9 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getBaseContext(), Editscreen.class);
-                    intent.putExtra("listsize", soundEffects.size());
-                    intent.putExtra("output", soundEffects.get(i).getOutput());
-                    intent.putExtra("name", soundEffects.get(i).getName());
+                    intent.putExtra("sound", current);
                     startActivity(intent);
                 }
             });
@@ -130,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void saveData() {
-        super.onStop();
         SharedPreferences sp = getSharedPreferences("SOUNDEFFECTS", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         String json = new Gson().toJson(soundEffects);

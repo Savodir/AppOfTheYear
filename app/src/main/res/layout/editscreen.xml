@@ -11,10 +11,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/editDefName"
             android:layout_width="match_parent"
             android:layout_height="74dp"
-            android:text="Name of recording" />
+            android:background="@android:color/holo_blue_bright"
+            android:gravity="center"
+            android:text="Name of recording"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Namechanger" />
+                android:gravity="center"
+                android:text="Change name to: " />
 
             <EditText
                 android:id="@+id/editNamechanger"
@@ -43,32 +47,135 @@
             android:id="@+id/editPlay"
             android:layout_width="match_parent"
             android:layout_height="46dp"
+            android:background="@android:color/holo_blue_light"
             android:text="Play" />
-
-        <TextView
-            android:id="@+id/editDelete"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Delete" />
 
         <TextView
             android:id="@+id/editRecord"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="Re-record" />
-
-        <TextView
-            android:id="@+id/editStopRecord"
-            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:background="@android:color/holo_red_dark"
+            android:layout_weight="5"
+            android:background="@android:color/holo_orange_dark"
             android:gravity="center"
-            android:text="Stop Recording"
-            android:textAlignment="center"
-            android:textAllCaps="true"
+            android:text="Re-record"
             android:textSize="24sp"
-            android:visibility="invisible" />
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/editStopRecord"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@android:color/holo_red_dark"
+                android:gravity="center"
+                android:text="Stop Recording"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="24sp"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/editPause"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="50"
+                    android:background="@android:color/darker_gray"
+                    android:gravity="center"
+                    android:text="Pause"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/editResume"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="50"
+                    android:background="@android:color/holo_green_light"
+                    android:gravity="center"
+                    android:text="Resume"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="74dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/editDone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50"
+                    android:background="@android:color/holo_green_dark"
+                    android:gravity="center"
+                    android:text="Done "
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/editDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="50"
+                    android:background="@android:color/holo_red_light"
+                    android:gravity="center"
+                    android:text="Delete"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/editDeleteChecker"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="Are you sure you want to delete this?"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/tt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/editDeleteYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="50"
+                    android:background="@android:color/holo_green_dark"
+                    android:gravity="center"
+                    android:text="Yes" />
+
+                <TextView
+                    android:id="@+id/editDeleteNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50"
+                    android:background="@android:color/holo_red_light"
+                    android:gravity="center"
+                    android:text="No" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

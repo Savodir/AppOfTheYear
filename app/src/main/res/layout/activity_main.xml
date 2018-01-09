@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/darker_gray"
     tools:context="eaict.luyksvancluysen.MainActivity">
 
     <LinearLayout
@@ -22,15 +23,22 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="50"
-                android:text="I am not a crook" />
+                android:layout_weight="45"
+                android:gravity="center"
+                android:text="Sound Effects"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="23sp" />
 
             <TextView
                 android:id="@+id/newSound"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="50"
-                android:text="Test" />
+                android:layout_weight="45"
+                android:gravity="center"
+                android:text="Add a new sound"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="23sp" />
 
         </LinearLayout>
 
@@ -39,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="50"
+            android:background="@android:color/darker_gray"
             tools:layout_editor_absoluteX="256dp"
             tools:layout_editor_absoluteY="50dp" />
 

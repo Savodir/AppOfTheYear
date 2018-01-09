@@ -1,5 +1,6 @@
 package eaict.luyksvancluysen;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 
 /**
@@ -18,36 +21,50 @@ import java.io.IOException;
 
 public class Editscreen extends MainActivity {
     MediaRecorder tempSound;
-    String numberofrecordings;
+    int currentsound;
+    String outputFile;
+    int samplerate = 16000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.editscreen);
+        loadData();
         tempSound = new MediaRecorder();
-        String outputFile;
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording"+ numberofrecordings+ ".3gp";
+        currentsound = getIntent().getIntExtra("sound", 0);
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording" + currentsound + ".3gp";
         tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
         tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         tempSound.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         tempSound.setOutputFile(outputFile);
         tempSound.setAudioSamplingRate(16000);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.editscreen);
         final EditText editText = findViewById(R.id.editNamechanger);
         TextView editName = findViewById(R.id.editName);
         final TextView editPlay = findViewById(R.id.editPlay);
         TextView editDelete = findViewById(R.id.editDelete);
+        TextView defName = findViewById(R.id.editDefName);
+        final TextView editPause = findViewById(R.id.editPause);
+        final TextView editResume = findViewById(R.id.editResume);
         final TextView editRecord = findViewById(R.id.editRecord);
         final TextView editStopRecord = findViewById(R.id.editRecord);
-        String name = getIntent().getStringExtra("name");
-        final String Output = getIntent().getStringExtra("output");
-        SoundEffects currentSound = new SoundEffects(Output, name);
+        final TextView editDelYes = findViewById(R.id.editDeleteYes);
+        final TextView editDelNo = findViewById(R.id.editDeleteNo);
+        final SoundEffects editSound = soundEffects.get(currentsound);
+        final TextView editDelCheck = findViewById(R.id.editDeleteChecker);
         editName.setText("Current name:");
-        editText.setText(name);
+        defName.setText(editSound.getName());
+        editText.setText(editSound.getName());
+        editDelCheck.setVisibility(View.GONE);
+        editDelNo.setVisibility(View.GONE);
+        editDelYes.setVisibility(View.GONE);
+        editPause.setVisibility(View.GONE);
+        editResume.setVisibility(View.GONE);
+        editStopRecord.setVisibility(View.GONE);
         editPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
-                    mediaPlayer.setDataSource(Output);
+                    mediaPlayer.setDataSource(editSound.getOutput());
                     mediaPlayer.prepare();
                     mediaPlayer.start();
                 } catch (Exception e) {
@@ -56,11 +73,11 @@ public class Editscreen extends MainActivity {
             }
 
         });
-        SoundEffects newSound = new SoundEffects();
         editRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
+                    NewSound();
                     tempSound.prepare();
                     tempSound.start();
                 } catch (IllegalStateException ise) {
@@ -71,14 +88,11 @@ public class Editscreen extends MainActivity {
                 editRecord.setText("Recording");
                 editStopRecord.setVisibility(View.VISIBLE);
                 editRecord.setEnabled(false);
-                //newsoundboard.setEnabled(false);
                 editPlay.setEnabled(false);
                 editText.setEnabled(false);
-                //newcancel.setEnabled(false);
                 Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_SHORT).show();
             }
         });
-
         editStopRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,13 +108,73 @@ public class Editscreen extends MainActivity {
                 tempSound = null;
                 editStopRecord.setVisibility(View.GONE);
                 editRecord.setEnabled(true);
-              //  newsoundboard.setEnabled(true);
                 editPlay.setEnabled(true);
                 editText.setEnabled(true);
-               // newcancel.setEnabled(true);
                 Toast.makeText(getApplicationContext(), "Recording Finished", Toast.LENGTH_SHORT).show();
             }
         });
-        editDelete.setText("Test");
+        editPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != tempSound) {
+                    try {
+                        tempSound.pause();
+                        editPause.setEnabled(false);
+                        editResume.setEnabled(true);
+                    } catch (RuntimeException ex) {
+                        //Ignore
+                    }
+                }
+            }
+        });
+        editResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != tempSound) {
+                    try {
+                        tempSound.resume();
+                        editPause.setEnabled(true);
+                        editResume.setEnabled(false);
+                    } catch (RuntimeException ex) {
+                        //Ignore
+                    }
+                }
+            }
+        });
+        editDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editDelCheck.setVisibility(View.VISIBLE);
+                editDelNo.setVisibility(View.VISIBLE);
+                editDelYes.setVisibility(View.VISIBLE);
+            }
+        });
+        editDelYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                soundEffects.remove(currentsound);
+                saveData();
+                Toast.makeText(getApplicationContext(), "Sound Deleted", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        editDelNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editDelCheck.setVisibility(View.GONE);
+                editDelNo.setVisibility(View.GONE);
+                editDelYes.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void NewSound() {
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording" + currentsound + ".3gp";
+        tempSound = new MediaRecorder();
+        tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
+        tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        tempSound.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        tempSound.setOutputFile(outputFile);
+        tempSound.setAudioSamplingRate(samplerate);
     }
 }
