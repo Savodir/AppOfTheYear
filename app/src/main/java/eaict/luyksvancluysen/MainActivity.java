@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.w3c.dom.Text;
@@ -32,7 +33,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    public List<SoundEffects>         soundEffects = new ArrayList<>();
+
+    List<SoundEffects> soundEffects;
 
     String name;
     String Output;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadData();
+//        loadData();
         String name = getIntent().getStringExtra("name");
         String Output = getIntent().getStringExtra("output");
         ActivityCompat.requestPermissions(MainActivity.this,
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 saveData();
             }
         });
+        soundEffects = new ArrayList<>();
         soundEffects.add(new SoundEffects("t", "t"));
         soundEffects.add(new SoundEffects("t", "t"));
         soundEffects.add(new SoundEffects("t", "t"));
@@ -130,26 +133,19 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         SharedPreferences sp = getSharedPreferences("SOUNDEFFECTS", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        Gson gson = new Gson();
-        for (int i = 0; i < soundEffects.size(); i++){
-            String json = gson.toJson(soundEffects.get(i));
-            String name = "soundlist" + i;
-            editor.putString(name, json);
-        }
+        SoundEffects soundEffect = new SoundEffects("test", "test");
+        String json = new Gson().toJson(soundEffect);
+        String name = "soundlist";
+        editor.putString(name, json);
         editor.apply();
     }
 
     public void loadData() {
         SharedPreferences sp = getSharedPreferences("SOUNDEFFECTS", MODE_PRIVATE);
-        Gson gson = new Gson();
-        List<SoundEffects> tempsoundEffects = new ArrayList<>();
-            for (int i = 0; i < soundEffects.size(); i++){
-                String name = "soundlist" + i;
-                String json = sp.getString(name, "");
-                SoundEffects soundeffect = gson.fromJson(json, SoundEffects.class);
-                tempsoundEffects.add(soundeffect);
-            }
-        soundEffects = tempsoundEffects;
+        String name = "soundlist";
+        String json = sp.getString(name, "");
+        Type soundEffectListType = new TypeToken<ArrayList<SoundEffects>>(){}.getType();
+        soundEffects = new Gson().fromJson(json, soundEffectListType);
     }
 
 }
