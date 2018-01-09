@@ -14,20 +14,24 @@
 
         <TextView
             android:id="@+id/txtname"
-            android:layout_width="155dp"
+            android:layout_width="203dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="20sp"
+            android:gravity="center"
             android:background="@android:color/background_light"
             android:text="TextView" />
 
         <Button
             android:id="@+id/listplay"
-            android:layout_width="198dp"
+            android:layout_width="150dp"
             android:layout_height="83dp"
             android:layout_weight="1"
             android:background="@android:color/holo_green_light"
             android:text="Play"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:drawableLeft="@mipmap/play"
+            />
 
         <Button
             android:id="@+id/listedit"

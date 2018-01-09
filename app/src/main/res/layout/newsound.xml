@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_weight="0"
-            android:background="@android:color/holo_blue_bright"
+            android:background="@android:color/darker_gray"
             android:gravity="center"
             android:text="New Sound Effect"
             android:textSize="36sp"
@@ -56,7 +56,10 @@
             android:gravity="center"
             android:text="Record"
             android:textAllCaps="false"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:drawableLeft="@mipmap/record"
+            android:paddingLeft="50dp"
+            android:paddingRight="115dp"/>
 
         <TextView
             android:id="@+id/newstoprecord"
@@ -102,7 +105,13 @@
             android:id="@+id/newplay"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Play" />
+            android:text="Play"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:background="@android:color/darker_gray"
+            android:drawableLeft="@mipmap/play"
+            android:paddingLeft="50dp"
+            android:paddingRight="110dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -123,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="50"
-                android:background="@android:color/holo_red_light"
+                android:background="@android:color/holo_red_dark"
                 android:gravity="center"
                 android:text="Cancel" />
         </LinearLayout>

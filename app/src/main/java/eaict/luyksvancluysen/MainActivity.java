@@ -33,7 +33,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
+
     List<SoundEffects> soundEffects;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 1);
         TextView newsound = findViewById(R.id.newSound);
+
         newsound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 saveData();
             }
         });
+
         TextView test2 = findViewById(R.id.textView4);
         ListView listView = findViewById(R.id.listview);
         CustomAdapter customAdapter = new CustomAdapter();
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             Button listplay = view.findViewById(R.id.listplay);
             Button listedit = view.findViewById(R.id.listedit);
             Listname.setText(soundEffects.get(i).getName());
+
             listplay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+
             listedit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

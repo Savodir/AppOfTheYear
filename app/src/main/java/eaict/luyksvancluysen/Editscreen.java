@@ -11,8 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 
 /**
@@ -20,18 +18,21 @@ import java.io.IOException;
  */
 
 public class Editscreen extends MainActivity {
+
     MediaRecorder tempSound;
-    int currentsound;
+    int currentSound;
     String outputFile;
-    int samplerate = 16000;
+    int sampleRate = 16000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editscreen);
         loadData();
+
         tempSound = new MediaRecorder();
-        currentsound = getIntent().getIntExtra("sound", 0);
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording" + currentsound + ".3gp";
+        currentSound = getIntent().getIntExtra("sound", 0);
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording" + currentSound + ".3gp";
         tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
         tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         tempSound.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
@@ -50,21 +51,23 @@ public class Editscreen extends MainActivity {
         final TextView editDelNo = findViewById(R.id.editDeleteNo);
         final TextView editDelCheck = findViewById(R.id.editDeleteChecker);
         TextView editSave = findViewById(R.id.editSave);
+
         editName.setText("Current name:");
-        defName.setText(soundEffects.get(currentsound).getName());
-        editText.setText(soundEffects.get(currentsound).getName());
+        defName.setText(soundEffects.get(currentSound).getName());
+        editText.setText(soundEffects.get(currentSound).getName());
         editDelCheck.setVisibility(View.GONE);
         editDelNo.setVisibility(View.GONE);
         editDelYes.setVisibility(View.GONE);
         editPause.setVisibility(View.GONE);
         editResume.setVisibility(View.GONE);
         editStopRecord.setVisibility(View.GONE);
+
         editPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
-                        mediaPlayer.setDataSource(soundEffects.get(currentsound).getOutput());
+                        mediaPlayer.setDataSource(soundEffects.get(currentSound).getOutput());
                         mediaPlayer.prepare();
                         mediaPlayer.start();
                 } catch (Exception e) {
@@ -73,6 +76,7 @@ public class Editscreen extends MainActivity {
             }
 
         });
+
         editRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +99,7 @@ public class Editscreen extends MainActivity {
                 Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_SHORT).show();
             }
         });
+
         editStopRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,6 +122,7 @@ public class Editscreen extends MainActivity {
                 Toast.makeText(getApplicationContext(), "Recording Finished", Toast.LENGTH_SHORT).show();
             }
         });
+
         editPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,6 +137,7 @@ public class Editscreen extends MainActivity {
                 }
             }
         });
+
         editResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,6 +152,7 @@ public class Editscreen extends MainActivity {
                 }
             }
         });
+
         editDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,10 +161,11 @@ public class Editscreen extends MainActivity {
                 editDelYes.setVisibility(View.VISIBLE);
             }
         });
+
         editDelYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                soundEffects.remove(currentsound);
+                soundEffects.remove(currentSound);
                 saveData();
                 Toast.makeText(getApplicationContext(), "Sound Deleted", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
@@ -171,10 +180,11 @@ public class Editscreen extends MainActivity {
                 editDelYes.setVisibility(View.GONE);
             }
         });
+
         editSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                soundEffects.get(currentsound).setName(editText.getText().toString());
+                soundEffects.get(currentSound).setName(editText.getText().toString());
                 Toast.makeText(getApplicationContext(), "Changes applied", Toast.LENGTH_SHORT).show();
                 saveData();
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
@@ -182,12 +192,13 @@ public class Editscreen extends MainActivity {
             }
         });
     }
+
     private void NewSound() {
         tempSound = new MediaRecorder();
         tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
         tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         tempSound.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        tempSound.setOutputFile(soundEffects.get(currentsound).getOutput());
-        tempSound.setAudioSamplingRate(samplerate);
+        tempSound.setOutputFile(soundEffects.get(currentSound).getOutput());
+        tempSound.setAudioSamplingRate(sampleRate);
     }
 }
