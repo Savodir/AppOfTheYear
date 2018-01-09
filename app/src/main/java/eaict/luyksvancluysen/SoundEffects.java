@@ -10,18 +10,18 @@ import java.io.Serializable;
  */
 
 public class SoundEffects /*implements Serializable*/ {
-    private MediaRecorder mediaRecorder;
+   // private MediaRecorder mediaRecorder;
     private String name;
     private String output;
 
     public SoundEffects(){
-        mediaRecorder = new MediaRecorder();
+        //mediaRecorder = new MediaRecorder();
     }
 
     public SoundEffects(String output, String name) {
         this.output = output;
         this.name = name;
-        mediaRecorder = new MediaRecorder();
+        //mediaRecorder = new MediaRecorder();
     }
     public String getName() {
         return this.name;
