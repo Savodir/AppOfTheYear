@@ -45,14 +45,14 @@ public class Editscreen extends MainActivity {
         final TextView editPause = findViewById(R.id.editPause);
         final TextView editResume = findViewById(R.id.editResume);
         final TextView editRecord = findViewById(R.id.editRecord);
-        final TextView editStopRecord = findViewById(R.id.editRecord);
+        final TextView editStopRecord = findViewById(R.id.editStopRecord);
         final TextView editDelYes = findViewById(R.id.editDeleteYes);
         final TextView editDelNo = findViewById(R.id.editDeleteNo);
-        final SoundEffects editSound = soundEffects.get(currentsound);
         final TextView editDelCheck = findViewById(R.id.editDeleteChecker);
+        TextView editSave = findViewById(R.id.editSave);
         editName.setText("Current name:");
-        defName.setText(editSound.getName());
-        editText.setText(editSound.getName());
+        defName.setText(soundEffects.get(currentsound).getName());
+        editText.setText(soundEffects.get(currentsound).getName());
         editDelCheck.setVisibility(View.GONE);
         editDelNo.setVisibility(View.GONE);
         editDelYes.setVisibility(View.GONE);
@@ -64,9 +64,9 @@ public class Editscreen extends MainActivity {
             public void onClick(View view) {
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
-                    mediaPlayer.setDataSource(editSound.getOutput());
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
+                        mediaPlayer.setDataSource(soundEffects.get(currentsound).getOutput());
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
                 } catch (Exception e) {
 
                 }
@@ -87,6 +87,8 @@ public class Editscreen extends MainActivity {
                 }
                 editRecord.setText("Recording");
                 editStopRecord.setVisibility(View.VISIBLE);
+                editPause.setVisibility(View.VISIBLE);
+                editResume.setVisibility(View.VISIBLE);
                 editRecord.setEnabled(false);
                 editPlay.setEnabled(false);
                 editText.setEnabled(false);
@@ -107,6 +109,8 @@ public class Editscreen extends MainActivity {
                 tempSound.release();
                 tempSound = null;
                 editStopRecord.setVisibility(View.GONE);
+                editPause.setVisibility(View.GONE);
+                editResume.setVisibility(View.GONE);
                 editRecord.setEnabled(true);
                 editPlay.setEnabled(true);
                 editText.setEnabled(true);
@@ -167,14 +171,23 @@ public class Editscreen extends MainActivity {
                 editDelYes.setVisibility(View.GONE);
             }
         });
+        editSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                soundEffects.get(currentsound).setName(editText.getText().toString());
+                Toast.makeText(getApplicationContext(), "Changes applied", Toast.LENGTH_SHORT).show();
+                saveData();
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void NewSound() {
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording" + currentsound + ".3gp";
         tempSound = new MediaRecorder();
         tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
         tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         tempSound.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        tempSound.setOutputFile(outputFile);
+        tempSound.setOutputFile(soundEffects.get(currentsound).getOutput());
         tempSound.setAudioSamplingRate(samplerate);
     }
 }

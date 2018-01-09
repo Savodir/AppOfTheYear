@@ -35,13 +35,11 @@ public class Newsound extends MainActivity {
     String outputFile;
     String name;
     int samplerate = 16000;
-    int numofsoundeffects;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newsound);
         loadData();
-        numofsoundeffects = soundEffects.size() + 1;
         final TextView newrecord = findViewById(R.id.newrecord);
         final TextView newstoprecord = findViewById(R.id.newstoprecord);
         final TextView newsoundboard = findViewById(R.id.newaddsoundboard);
@@ -172,7 +170,7 @@ public class Newsound extends MainActivity {
         });
     }
     private void newSound() {
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording"+ numofsoundeffects+ ".3gp";
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording"+ soundEffects.size()+ ".3gp";
         tempSound = new MediaRecorder();
         tempSound.setAudioSource(MediaRecorder.AudioSource.MIC);
         tempSound.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
