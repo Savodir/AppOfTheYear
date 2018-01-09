@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        loadData();
+        loadData();
         String name = getIntent().getStringExtra("name");
         String Output = getIntent().getStringExtra("output");
         ActivityCompat.requestPermissions(MainActivity.this,
@@ -133,8 +133,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         SharedPreferences sp = getSharedPreferences("SOUNDEFFECTS", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        SoundEffects soundEffect = new SoundEffects("test", "test");
-        String json = new Gson().toJson(soundEffect);
+        String json = new Gson().toJson(soundEffects);
         String name = "soundlist";
         editor.putString(name, json);
         editor.apply();
@@ -143,9 +142,12 @@ public class MainActivity extends AppCompatActivity {
     public void loadData() {
         SharedPreferences sp = getSharedPreferences("SOUNDEFFECTS", MODE_PRIVATE);
         String name = "soundlist";
-        String json = sp.getString(name, "");
+        String json = sp.getString(name, null);
         Type soundEffectListType = new TypeToken<ArrayList<SoundEffects>>(){}.getType();
         soundEffects = new Gson().fromJson(json, soundEffectListType);
+        if (soundEffects == null){
+            soundEffects = new ArrayList<>();
+        }
     }
 
 }

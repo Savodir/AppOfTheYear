@@ -24,6 +24,11 @@ import java.util.List;
 
 /**
  * Created by CarlV on 1/5/2018.
+ *
+ *
+ * Volgens mij moet gij hier ergens nog een loadData() doen om uw nieuwe sound aan het einde van uw array te steken.
+ * Ik ban ni zeker waar en hoe da da zou werken. Ma gij zijt de pro voor iets.
+ * https://stackoverflow.com/questions/48160121/can-not-make-a-java-lang-reflect-method-constructor-accessible-when-converting-o <------ Link naar stack overflow vraag mss is er nog een antwoord op gepost
  */
 public class Newsound extends MainActivity {
     MediaRecorder tempSound;
@@ -114,7 +119,7 @@ public class Newsound extends MainActivity {
             @Override
             public void onClick(View view) {
                 name = newnamechanger.getText().toString();
-              //  saveData();
+                saveData();
 
                 Log.d("Name", name);
                 Toast.makeText(getApplicationContext(), "New sound added!", Toast.LENGTH_SHORT).show();
